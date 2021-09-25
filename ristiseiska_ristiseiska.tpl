@@ -29,24 +29,21 @@
 <div id="myhand_wrap" class="whiteblock">
     <h3>{MY_HAND}</h3>
     <div id="myhand">
-       <div class="playertablecard"></div>
     </div>
 </div>
 
 <div class="whiteblock relative_parent">
     <h3>{GAME_TABLE}</h3><div id="token_park" class="token_zone"><div id="penalty_token"></div></div>
-    <div id="gametable_1">
-       <div class="playertablecard"></div>
+    <!-- BEGIN gametable -->
+    <div id="gametable_{I}">
+      <div id="gametable_{I}_bottom_container" class="inline_card_row_container bottom_row">
+        <div id="gametable_{I}_bottom" class="inline_card_row"></div>
+      </div>
+      <div id="gametable_{I}_top_container" class="inline_card_row_container top_row">
+        <div id="gametable_{I}_top" class="inline_card_row"></div>
+      </div>
     </div>
-    <div id="gametable_2">
-       <div class="playertablecard"></div>
-    </div>
-    <div id="gametable_3">
-       <div class="playertablecard"></div>
-    </div>
-    <div id="gametable_4">
-       <div class="playertablecard"></div>
-    </div>
+    <!-- END gametable -->
 </div>
 
 

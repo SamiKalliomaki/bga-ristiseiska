@@ -80,6 +80,18 @@
     z-index: 100;
 }
 
+.inline_card_row_container {
+    display: inline-block;
+}
+
+.inline_card_row {
+    display: inline-block;
+}
+
+.bottom_row > .inline_card_row {
+    float: right;
+}
+
 /*** cards on table ***/
 
 .unplayable::after {

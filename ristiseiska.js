@@ -17,12 +17,13 @@
 
 define([
     "dojo","dojo/_base/declare",
+    g_gamethemeurl + "modules/rse_cards.js",
     "ebg/core/gamegui",
     "ebg/counter",
     "ebg/stock",
-    "ebg/zone"
+    "ebg/zone",
 ],
-function (dojo, declare) {
+function (dojo, declare, cards) {
     return declare("bgagame.ristiseiska", ebg.core.gamegui, {
         constructor: function(){
             console.log('ristiseiska constructor');
@@ -76,12 +77,10 @@ function (dojo, declare) {
             this.penaltyHolder = 0;
 
             // TODO: Set up your game interface here, according to "gamedatas"
-            this.playerHand = this.createCardStock($('myhand'));
+            this.playerHand = cards.createCardStock(this, $('myhand'));
             this.gametable = Array(5);
             for (var color = 1; color <= 4; color++) {
-                var gametable = this.createCardStock($('gametable_' + color));
-                gametable.setSelectionMode(0);
-                this.gametable[color] = gametable;
+                this.gametable[color] = new cards.GametableRow(this, 'gametable_' + color);
             }
 
             this.resetHandAndTable(gamedatas);
@@ -92,30 +91,6 @@ function (dojo, declare) {
             this.setupNotifications();
 
             console.log( "Ending game setup" );
-        },
-
-        createCardStock : function(container) {
-            var stock = new ebg.stock();
-            stock.create( this, container, this.cardwidth, this.cardheight );
-            stock.image_items_per_row = 13;
-            // Create cards types:
-            for (var color = 1; color <= 4; color++) {
-                for (var value = 1; value <= 13; value++) {
-                    // Build card type id
-                    var card_type_id = this.getCardUniqueId(color, value);
-                    stock.addItemType(card_type_id, card_type_id, g_gamethemeurl + 'img/cards.png', this.getCardImgLoc(color, value));
-                }
-            }
-            return stock;
-        },
-
-        // Get card unique identifier based on its color and value
-        getCardUniqueId : function(color, value) {
-            return (color - 1) * 13 + (value - 1);
-        },
-
-        getCardImgLoc : function(color, value) {
-            return (color - 1) * 13 + (value - 1);
         },
 
         ///////////////////////////////////////////////////
@@ -202,9 +177,9 @@ function (dojo, declare) {
         playCardOnTable : function(player_id, color, value, card_id) {
             if (player_id == this.player_id) {
                 this.playerHand.removeFromStockById(card_id);
-                this.gametable[color].addToStockWithId(this.getCardUniqueId(color, value), card_id, this.playerHand.getItemDivId(card_id));
+                this.gametable[color].addCard(color, value, card_id, this.playerHand.getItemDivId(card_id));
             } else {
-                this.gametable[color].addToStockWithId(this.getCardUniqueId(color, value), card_id, 'player_board_' + player_id);
+                this.gametable[color].addCard(color, value, card_id, 'player_board_' + player_id);
             }
         },
 
@@ -245,7 +220,7 @@ function (dojo, declare) {
                 var card = gamedatas.hand[i];
                 var color = card.type;
                 var value = card.type_arg;
-                this.playerHand.addToStockWithId(this.getCardUniqueId(color, value), card.id);
+                this.playerHand.addToStockWithId(cards.getCardUniqueId(color, value), card.id);
             }
 
             // Cards played on table
@@ -253,7 +228,7 @@ function (dojo, declare) {
                 var card = gamedatas.cardsontable[i];
                 var color = card.type;
                 var value = card.type_arg;
-                this.gametable[color].addToStockWithId(this.getCardUniqueId(color, value), card.id);
+                this.gametable[color].addCard(color, value, card.id);
             }
 
             for(var player_id in gamedatas.cardcounts) {

@@ -80,7 +80,12 @@
         $this->tpl['GAME_TABLE'] = self::_("Game table");
         $this->tpl['CARDS_IN_HAND'] = self::_("Cards in hand");
 
-
+        $this->page->begin_block( "ristiseiska_ristiseiska", "gametable" );
+        for( $i=1; $i<=4; $i++ ) {
+          $this->page->insert_block( "gametable", array(
+            'I' => $i,
+            ) );
+        }
 
         /*********** Do not change anything below this line  ************/
   	}
