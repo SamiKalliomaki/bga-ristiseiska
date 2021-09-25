@@ -35,14 +35,8 @@
 <div class="whiteblock relative_parent">
     <h3>{GAME_TABLE}</h3><div id="token_park" class="token_zone"><div id="penalty_token"></div></div>
     <!-- BEGIN gametable -->
-    <div id="gametable_{I}">
-      <div id="gametable_{I}_bottom_container" class="inline_card_row_container bottom_row">
-        <div id="gametable_{I}_bottom" class="inline_card_row"></div>
-      </div>
-      <div id="gametable_{I}_top_container" class="inline_card_row_container top_row">
-        <div id="gametable_{I}_top" class="inline_card_row"></div>
-      </div>
-    </div>
+    <!-- Annoyingly there cannot be spaces here to avoid whitespace in the middle of the card row. -->
+    <div id="gametable_{I}"><div id="gametable_{I}_bottom_container" class="inline_card_row_container bottom_row"><div id="gametable_{I}_bottom" class="inline_card_row"></div></div><div id="gametable_{I}_top_container" class="inline_card_row_container top_row"><div id="gametable_{I}_top" class="inline_card_row"></div></div></div>
     <!-- END gametable -->
 </div>
 
